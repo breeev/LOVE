@@ -1,14 +1,16 @@
 from mido import Message,MidiFile,MidiTrack,MetaMessage,bpm2tempo
 def t(x:int)->int:return int(1920/x)
 mid=MidiFile()
-st="120@1l4o4cccde,d,ceddl1c"
+st="200@1l8o4cccde,d,ceddl1c@2l2o3c.<g."
 notes="cCdDefFgGaAb"
 i=0
+ddump=""
 while i<len(st):
     char=st[i]
-    ddump=""
     if char=="@":
-        if ddump:mid.tracks.append(MidiTrack([MetaMessage('midi_port',port=0),MetaMessage('set_tempo',tempo=bpm2tempo(int(ddump)))]))
+        if ddump:
+            mid.tracks.append(MidiTrack([MetaMessage('midi_port',port=0),MetaMessage('set_tempo',tempo=bpm2tempo(int(ddump)))]))
+            ddump=""
         i+=1
         char=st[i]
         track=MidiTrack()
@@ -61,3 +63,5 @@ while i<len(st):
     i+=1
 mid.save('new_song.mid')
 print(mid.tracks)
+from os import system
+system(r'D:\MidiSheetMusic-2.6.2.exe C:\Users\breva\LOV\new_song.mid')
