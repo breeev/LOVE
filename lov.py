@@ -4,7 +4,7 @@ def incr():
     i+=1
     char=st[i]
 mid=MidiFile()
-st="240@1l8o4(6c)l4de,d,ceddl6cdcc,,@2l2o3c.<g."
+st="240@1l8o4((3c+))l4de,d,+c-e+d-dl6cv1dvFcc,,@2l2o3c.<g."
 notes="cCdDefFgGaAb"
 i=0
 ddump=""
@@ -24,8 +24,8 @@ while i<len(st):
             incr()
             if char=='<':o-=1
             elif char=='>':o+=1
-            elif char=='+':v+=1
-            elif char=='-':v-=1
+            elif char=='+' and v<127-14:v+=15
+            elif char=='-' and v>0:v-=15
             elif char=='l':
                 d=''
                 incr()
@@ -39,7 +39,7 @@ while i<len(st):
                 o=int(st[i])
             elif char=='v':
                 i+=1
-                v=int(st[i],16)
+                v=int((int(st[i],16)/15)*127)
             elif char=="'":
                 d=''
                 incr()
@@ -63,9 +63,10 @@ while i<len(st):
                 ida=i
                 level=1
                 while level:
-                    incr()
                     if char==')':level-=1
                     elif char=='(':level+=1
+                    incr()
+                i-=1
                 st=st[:ids]+(int(r) if r else 2)*st[ida:i]+st[i+1:]
                 i=ids-1
         i-=1
