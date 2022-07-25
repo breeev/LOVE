@@ -10,16 +10,17 @@ while i<len(st):
     if char=="@":
         if ddump:mid.tracks.append(MidiTrack([MetaMessage('midi_port',port=0),MetaMessage('set_tempo',tempo=bpm2tempo(int(ddump)))]))
         i+=1
+        char=st[i]
         track=MidiTrack()
         mid.tracks.append(track)
-        track.append(MetaMessage('midi_port',port=int(st[i],16)))
-        i+=1
-        char=st[i]
+        track.append(MetaMessage('midi_port',port=int(char,16)))
         l=4
         o=4
         v=64
         s=0
         while char!="@" and i<len(st)-1:
+            i+=1
+            char=st[i]
             if char=='<':o-=1
             elif char=='>':o+=1
             elif char=='+':v+=1
@@ -55,8 +56,6 @@ while i<len(st):
                 if s:s=0
             elif char==',':track[-1].time+=int(1920/l)
             elif char=='.':s+=1920/l
-            i+=1
-            char=st[i]
         i-=1
     elif char.isdigit:ddump+=char
     i+=1
