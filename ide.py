@@ -1,0 +1,10 @@
+from tkinter import Tk as Window,Text,Frame
+root=Window()
+print(root.winfo_screenheight())
+print(root.winfo_screenwidth())
+root.wm_attributes('-fullscreen', 'True')
+border=Frame(root,width=50,bg='black').pack(fill='y',side='left')
+status=Frame(root,height=20,bg='blue').pack(fill='x',side='bottom')
+text=Text(root).pack(expand=True, fill='both')
+root.focus_force()
+root.mainloop()
