@@ -27,7 +27,7 @@ def save(e=None):pass
 def run(e=None):pass
 
 def settings(e=None):
-    global x,y,s
+    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd
     s=Window()
     width=480
     height=480
@@ -80,7 +80,16 @@ def settings(e=None):
     s.mainloop()
 
 def Apply():pass
-def Save():pass
+def Save():
+    data=f"""# text box font
+family='{ffamily.get()}'
+size={fsize.get()}
+bgC='{bgc.get()}'
+fgC='{fgc.get()}'
+Pside='{pside.get()}'# side-pannel side
+Relief='{relief.get()}'
+Bd={bd.get()}"""
+    with open('preferences','w') as f:f.write(data)
 def Close(s):s.destroy()
 
 chars={
