@@ -4,16 +4,16 @@ from time import strftime
 
 settingsWindowActive=False
 
-def ex():
+def ex(e=None):
     global id,settingsWindowActive
     if settingsWindowActive:close()
     w.destroy()
 def close(s):s.destroy()
-def new():pass
-def load():pass
-def save():pass
-def run():pass
-def settings():
+def new(e=None):print(e)
+def load(e=None):pass
+def save(e=None):pass
+def run(e=None):pass
+def settings(e=None):
     settingsWindowActive=True
     s=Window()
     s.overrideredirect(True)
@@ -38,15 +38,22 @@ w.title('LOV IDE <3')
 w.wm_attributes('-fullscreen','True')
 x,y=w.winfo_screenwidth(),w.winfo_screenheight()
 
+w.bind('<Control-q>',ex)
+w.bind('<Control-n>',new)
+w.bind('<Control-o>',load)
+w.bind('<Control-s>',save)
+w.bind('<F5>',run)
+w.bind('<Control-Shift-P>',settings)
+
 # static
 sF=Font(family='Arial',size=16)
 
+tF=Font(family='Terminal',size=13)# text box font
 bgC='black'
 fgC='lime'
 Pside='left'# side-pannel side
 source=''# where text files are stored
 dest=''# where mid files are stored
-tF=Font(family='Terminal',size=13)# text box font
 
 side=Frame(w,width=50,bg=bgC,bd=0).pack(fill='y',side=Pside)
 status=Frame(w,height=25,bg=bgC,bd=0).pack(fill='x',side='bottom')
