@@ -1,15 +1,16 @@
 from tkinter import Tk as Window,Text,Frame,Button
 from tkinter.font import Font
 
-backgroundColor='black'
-foregroundColor='lime'
+bgC='black'
+fgC='lime'
 
-def ex():root.destroy()
+def ex():w.destroy()
 def new():pass
 def load():pass
 def save():pass
 def run():pass
 def settings():pass
+
 chars={
     'exit':'\u274E',
     'new':'\u2747',
@@ -21,12 +22,16 @@ chars={
 fcts=[ex,new,load,save,run,settings]
 btns={}
 
-root=Window()
-sideFont=Font(family='Arial',size=16)
-root.wm_attributes('-fullscreen', 'True')
-side=Frame(root,width=50,bg=backgroundColor,relief='ridge',bd=1).pack(fill='y',side='left')
-status=Frame(root,height=20,bg=backgroundColor,relief='ridge',bd=1).pack(fill='x',side='bottom')
-text=Text(root,bg=backgroundColor).pack(expand=True, fill='both')
-for i,b in enumerate(chars):btns[b]=Button(side,bg=backgroundColor,fg=foregroundColor,activebackground=foregroundColor,activeforeground=backgroundColor,text=chars[b],font=sideFont,relief='flat',command=fcts[i]).place(x=1,y=10+50*i)
-root.focus_force()
-root.mainloop()
+w=Window()
+w.title('LOV IDE <3')
+
+sF=Font(family='Arial',size=16)
+tF=Font(family='Terminal',size=13)
+
+w.wm_attributes('-fullscreen','True')
+side=Frame(w,width=50,bg=bgC,relief='ridge',bd=0).pack(fill='y',side='left')
+status=Frame(w,height=20,bg=bgC,relief='ridge',bd=1).pack(fill='x',side='bottom')
+text=Text(w,bg=bgC,fg=fgC,insertbackground=fgC,font=tF,bd=20).pack(expand=True,fill='both')
+for i,b in enumerate(chars):btns[b]=Button(side,bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,text=chars[b],font=sF,relief='flat',command=fcts[i]).place(x=1,y=10+50*i)
+w.focus_force()
+w.mainloop()
