@@ -1,0 +1,10 @@
+# text box font
+family='Terminal'
+size=13
+bgC='black'
+fgC='lime'
+Pside='left'# side-pannel side
+Relief='sunken'
+Bd=50
+source=''# where text files are stored
+dest=''# where mid files are stored
