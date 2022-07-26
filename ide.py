@@ -1,9 +1,15 @@
-from tkinter import Tk as Window,Text,Frame,Button,PhotoImage
+from tkinter import Tk as Window,Text,Frame,Button
 from tkinter.font import Font
-from cairosvg import svg2png
 
 backgroundColor='black'
 foregroundColor='lime'
+
+def ex():root.destroy()
+def new():pass
+def load():pass
+def save():pass
+def run():pass
+def settings():pass
 chars={
     'exit':'\u274E',
     'new':'\u2747',
@@ -12,15 +18,8 @@ chars={
     'run':'\u25B6',
     'settings':'\u2699'
 }
-btns={}
-
-def ex():root.destroy()
-def new():pass
-def load():pass
-def save():pass
-def run():pass
-def settings():pass
 fcts=[ex,new,load,save,run,settings]
+btns={}
 
 root=Window()
 sideFont=Font(family='Arial',size=16)
