@@ -27,7 +27,7 @@ def save(e=None):pass
 def run(e=None):pass
 
 def settings(e=None):
-    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd
+    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,b
     s=Window()
     width=480
     height=480
@@ -36,38 +36,46 @@ def settings(e=None):
     s.attributes('-topmost',True)
     s.config(bg=fgC)
     border=1
-    Frame(s,bg=bgC,width=width-2*border,height=height-2*border).place(x=border,y=border)
+    f1=Frame(s,bg=bgC,width=width-2*border,height=height-2*border)
+    f1.place(x=border,y=border)
     c=LabelFrame(s,text="Customisation",fg=fgC,bg=bgC)
     c.grid(column=0,row=0,columnspan=3,padx=30,pady=30,ipadx=10,ipady=10)
-    Label(c,text="Font family: ",bg=bgC,fg=fgC).grid(column=0,row=0,sticky='E')
+    f2=Label(c,text="Font family: ",bg=bgC,fg=fgC)
+    f2.grid(column=0,row=0,sticky='E')
     ffamily=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     ffamily.grid(column=1,row=0)
     t(ffamily,family)
-    Label(c,text="Font size: ",bg=bgC,fg=fgC).grid(column=0,row=1,sticky='E')
+    f3=Label(c,text="Font size: ",bg=bgC,fg=fgC)
+    f3.grid(column=0,row=1,sticky='E')
     fsize=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     fsize.grid(column=1,row=1)
     t(fsize,size)
-    Label(c,text="Background color: ",bg=bgC,fg=fgC).grid(column=0,row=2,sticky='E')
+    f4=Label(c,text="Background color: ",bg=bgC,fg=fgC)
+    f4.grid(column=0,row=2,sticky='E')
     bgc=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     bgc.grid(column=1,row=2)
     t(bgc,bgC)
-    Label(c,text="Foreground color: ",bg=bgC,fg=fgC).grid(column=0,row=3,sticky='E')
+    f5=Label(c,text="Foreground color: ",bg=bgC,fg=fgC)
+    f5.grid(column=0,row=3,sticky='E')
     fgc=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     fgc.grid(column=1,row=3)
     t(fgc,fgC)
-    Label(c,text="Panel side: ",bg=bgC,fg=fgC).grid(column=0,row=4,sticky='E')
+    f6=Label(c,text="Panel side: ",bg=bgC,fg=fgC)
+    f6.grid(column=0,row=4,sticky='E')
     pside=StringVar(c)
     pside.set(Pside)
     o=OptionMenu(c,pside,'left','right')
     o.grid(column=1,row=4)
     o.config(bg=bgC,fg=fgC,activebackground=bgC,activeforeground=fgC,highlightthickness=0,width=15)
-    Label(c,text="Text box relief: ",bg=bgC,fg=fgC).grid(column=0,row=5,sticky='E')
+    f7=Label(c,text="Text box relief: ",bg=bgC,fg=fgC)
+    f7.grid(column=0,row=5,sticky='E')
     relief=StringVar(c)
     relief.set(Relief)
     q=OptionMenu(c,relief,'flat','raised','sunken','groove','ridge')
     q.grid(column=1,row=5)
     q.config(bg=bgC,fg=fgC,activebackground=bgC,activeforeground=fgC,highlightthickness=0,width=15)
-    Label(c,text="Text box border size: ",bg=bgC,fg=fgC).grid(column=0,row=6,sticky='E')
+    f8=Label(c,text="Text box border size: ",bg=bgC,fg=fgC)
+    f8.grid(column=0,row=6,sticky='E')
     bd=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     bd.grid(column=1,row=6)
     t(bd,Bd)
@@ -79,7 +87,12 @@ def settings(e=None):
     for i in range(0,3):b[i].grid(column=i,row=1)
     s.mainloop()
 
-def Apply():pass
+def Apply():
+    tF=Font(family=ffamily.get(),size=fsize.get())
+    # frames: f1,side,status
+    for widget in [c,f2,ffamily,f3,fsize,f4,bgc,f5,fgc,f6,o,f7,q,f8,bd,*b,text,*[btns[i] for i in btns],clock]:
+        widget.configure(bg=bgc.get(),fg=fgc.get())
+    #text.configure(font=tF)
 def Save():
     data=f"""# text box font
 family='{ffamily.get()}'
@@ -116,8 +129,11 @@ tF=Font(family=family,size=size)
 
 side=Frame(w,width=50,bg=bgC,bd=0).pack(fill='y',side=Pside)
 status=Frame(w,height=25,bg=bgC,bd=0).pack(fill='x',side='bottom')
-text=Text(w,bg=bgC,fg=fgC,insertbackground=fgC,font=tF,bd=Bd,relief=Relief,selectbackground=fgC,selectforeground=bgC).pack(expand=True,fill='both')
-for i,b in enumerate(chars):btns[b]=Button(side,bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,text=chars[b],font=sF,relief='flat',command=fcts[i]).place(x=x-50 if Pside=='right' else 1,y=10+50*i)
+text=Text(w,bg=bgC,fg=fgC,insertbackground=fgC,font=tF,bd=Bd,relief=Relief,selectbackground=fgC,selectforeground=bgC)
+text.pack(expand=True,fill='both')
+for i,b in enumerate(chars):
+    btns[b]=Button(side,bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,text=chars[b],font=sF,relief='flat',command=fcts[i])
+    btns[b].place(x=x-50 if Pside=='right' else 1,y=10+50*i)
 time1=''
 clock=Label(w,bg=bgC,fg=fgC)
 clock.place(x=x-40,y=y-23)
