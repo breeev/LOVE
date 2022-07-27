@@ -27,7 +27,7 @@ def save(e=None):pass
 def run(e=None):pass
 
 def settings(e=None):
-    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,b
+    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt
     s=Window()
     width=480
     height=480
@@ -66,33 +66,52 @@ def settings(e=None):
     pside.set(Pside)
     o=OptionMenu(c,pside,'left','right')
     o.grid(column=1,row=4)
-    o.config(bg=bgC,fg=fgC,activebackground=bgC,activeforeground=fgC,highlightthickness=0,width=15)
+    o.config(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,highlightthickness=0,width=15)
     f7=Label(c,text="Text box relief: ",bg=bgC,fg=fgC)
     f7.grid(column=0,row=5,sticky='E')
     relief=StringVar(c)
     relief.set(Relief)
     q=OptionMenu(c,relief,'flat','raised','sunken','groove','ridge')
     q.grid(column=1,row=5)
-    q.config(bg=bgC,fg=fgC,activebackground=bgC,activeforeground=fgC,highlightthickness=0,width=15)
+    q.config(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,highlightthickness=0,width=15)
     f8=Label(c,text="Text box border size: ",bg=bgC,fg=fgC)
     f8.grid(column=0,row=6,sticky='E')
     bd=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     bd.grid(column=1,row=6)
     t(bd,Bd)
-    b=[
+    butt=[
         Button(s,text="Apply",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=Apply),
         Button(s,text="Save",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=Save),
         Button(s,text="Close",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=lambda:Close(s)),
     ]
-    for i in range(0,3):b[i].grid(column=i,row=1)
+    for i in range(0,3):butt[i].grid(column=i,row=1)
     s.mainloop()
 
 def Apply():
-    tF=Font(family=ffamily.get(),size=fsize.get())
-    # frames: f1,side,status
-    for widget in [c,f2,ffamily,f3,fsize,f4,bgc,f5,fgc,f6,o,f7,q,f8,bd,*b,text,*[btns[i] for i in btns],clock]:
-        widget.configure(bg=bgc.get(),fg=fgc.get())
-    #text.configure(font=tF)
+    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt,chars,family,size,bgC,fgC,Pside,Relief,Bd,tF
+    frames=[f1,side,status]
+    labelframes=[c]
+    labels=[f2,f3,f4,f5,f6,f7,f8,clock]
+    entries=[ffamily,fsize,bgc,fgc,bd]
+    buttons=[*butt,*[btns[i] for i in btns]]
+    optionmenus=[o,q]
+    texts=[text]
+    family=ffamily.get()
+    size=int(fsize.get())
+    bgC=bgc.get()
+    fgC=fgc.get()
+    Pside=pside.get()
+    Relief=relief.get()
+    Bd=int(bd.get())
+    tF=Font(family=family,size=size)
+    s.config(bg=fgC)
+    for widget in frames:widget.configure(bg=bgC)
+    for widget in labelframes+labels:widget.configure(bg=bgC,fg=fgC)
+    for widget in buttons+optionmenus:widget.configure(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC)
+    for widget in entries:widget.configure(bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
+    for widget in texts:widget.configure(bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC,font=tF,relief=Relief,bd=Bd)
+    side.pack(fill='y',side=Pside)
+    for i,z in enumerate(chars):btns[z].place(x=x-50 if Pside=='right' else 1,y=10+50*i)
 def Save():
     data=f"""# text box font
 family='{ffamily.get()}'
@@ -127,13 +146,15 @@ w.bind('<Control-Shift-P>',settings)
 sF=Font(family='Arial',size=16)
 tF=Font(family=family,size=size)
 
-side=Frame(w,width=50,bg=bgC,bd=0).pack(fill='y',side=Pside)
-status=Frame(w,height=25,bg=bgC,bd=0).pack(fill='x',side='bottom')
+side=Frame(w,width=50,bg=bgC,bd=0)
+side.pack(fill='y',side=Pside)
+status=Frame(w,height=25,bg=bgC,bd=0)
+status.pack(fill='x',side='bottom')
 text=Text(w,bg=bgC,fg=fgC,insertbackground=fgC,font=tF,bd=Bd,relief=Relief,selectbackground=fgC,selectforeground=bgC)
 text.pack(expand=True,fill='both')
-for i,b in enumerate(chars):
-    btns[b]=Button(side,bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,text=chars[b],font=sF,relief='flat',command=fcts[i])
-    btns[b].place(x=x-50 if Pside=='right' else 1,y=10+50*i)
+for i,v in enumerate(chars):
+    btns[v]=Button(w,bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,text=chars[v],font=sF,relief='flat',command=fcts[i])
+    btns[v].place(x=x-50 if Pside=='right' else 1,y=10+50*i)
 time1=''
 clock=Label(w,bg=bgC,fg=fgC)
 clock.place(x=x-40,y=y-23)
