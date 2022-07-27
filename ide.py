@@ -1,5 +1,5 @@
 from time import strftime
-from tkinter import Button,Entry,Frame,Label,LabelFrame,OptionMenu,StringVar,Text,Toplevel
+from tkinter import Button,Entry,Frame,Label,LabelFrame,OptionMenu,StringVar,Text
 from tkinter import Tk as Window
 from tkinter.font import Font
 from idlelib.tooltip import Hovertip
