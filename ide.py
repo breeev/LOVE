@@ -1,7 +1,8 @@
-from tkinter import Tk as Window,Text,Frame,Button,Label,Entry,LabelFrame,OptionMenu,StringVar
-from tkinter.font import Font
-from tkinter.ttk import Style
 from time import strftime
+from tkinter import Button,Entry,Frame,Label,LabelFrame,OptionMenu,StringVar,Text,Toplevel
+from tkinter import Tk as Window
+from tkinter.font import Font
+from idlelib.tooltip import Hovertip
 
 w=Window()
 w.title('LOV IDE <3')
@@ -21,6 +22,11 @@ def ex(e=None):
     try:Close(s)
     except:pass
     w.destroy()
+def restart(e=None):
+    ex()
+    from os import execl
+    from sys import executable as e,argv
+    execl(e,e,*argv)
 def new(e=None):print(e)
 def load(e=None):pass
 def save(e=None):pass
@@ -29,7 +35,7 @@ def run(e=None):pass
 def settings(e=None):
     global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt
     s=Window()
-    width=480
+    width=350
     height=480
     s.geometry(f'{width}x{height}+{int((x/2)-(width/2))}+{int((y/2)-(height/2))}')
     s.overrideredirect(True)
@@ -109,9 +115,9 @@ def Apply():
     for widget in labelframes+labels:widget.configure(bg=bgC,fg=fgC)
     for widget in buttons+optionmenus:widget.configure(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC)
     for widget in entries:widget.configure(bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
-    for widget in texts:widget.configure(bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC,font=tF,relief=Relief,bd=Bd)
+    for widget in texts:widget.configure(bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC,font=tF,relief=Relief,bd=Bd,tabstyle='wordprocessor')
     side.pack(fill='y',side=Pside)
-    for i,z in enumerate(chars):btns[z].place(x=x-50 if Pside=='right' else 1,y=10+50*i)
+    for i,z in enumerate(chars):btns[z].place(x=x-60 if Pside=='right' else -15,y=-2+60*i)
 def Save():
     data=f"""# text box font
 family='{ffamily.get()}'
@@ -125,14 +131,15 @@ Bd={bd.get()}"""
 def Close(s):s.destroy()
 
 chars={
-    'exit':'\u274E',
-    'new':'\u2747',
-    'load':'\u2934',
-    'save':'\u2935',
-    'run':'\u25B6',
-    'settings':'\u2699'
+    'exit':'\u2716',
+    'restart':'\u2724',
+    'new':'\u271A',
+    'load':'\u2727',
+    'save':'\u2726',
+    'run':'\u2764',
+    'settings':'\u2763'
 }
-fcts=[ex,new,load,save,run,settings]
+fcts=[ex,restart,new,load,save,run,settings]
 btns={}
 
 w.bind('<Control-q>',ex)
@@ -143,7 +150,7 @@ w.bind('<F5>',run)
 w.bind('<Control-Shift-P>',settings)
 
 # static
-sF=Font(family='Arial',size=16)
+sF=Font(family='Arial',size=30)
 tF=Font(family=family,size=size)
 
 side=Frame(w,width=50,bg=bgC,bd=0)
@@ -154,15 +161,21 @@ text=Text(w,bg=bgC,fg=fgC,insertbackground=fgC,font=tF,bd=Bd,relief=Relief,selec
 text.pack(expand=True,fill='both')
 for i,v in enumerate(chars):
     btns[v]=Button(w,bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,text=chars[v],font=sF,relief='flat',command=fcts[i])
-    btns[v].place(x=x-50 if Pside=='right' else 1,y=10+50*i)
+    btns[v].place(x=x-60 if Pside=='right' else -15,y=-2+60*i)
+    btns[v].lower(belowThis=text)
+    Hovertip(btns[v],v,hover_delay=500)
 time1=''
 clock=Label(w,bg=bgC,fg=fgC)
-clock.place(x=x-40,y=y-23)
+clock.place(x=x-70,y=y-23)
+al=-1
 def tick():
     """Controls the clock (bottom right on status bar)."""
-    global time1,id
+    global time1,id,al
     time2=strftime('%H:%M')# get current time
-    if time2!=time1:time1=time2;clock.config(text=time2)# if time string has changed, update it
+    if time2!=time1:
+        time1=time2
+        al+=1
+        clock.config(text=time2+" | {:0>2}:{:0>2}".format(al//60,al%60))# if time string has changed, update it
     clock.after(1000,tick)# calls itself every second to update the time display as needed
 tick()
 w.focus_force()

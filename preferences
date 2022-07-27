@@ -1,8 +1,8 @@
 # text box font
 family='Terminal'
-size=14
+size=30
 bgC='black'
 fgC='lime'
 Pside='right'# side-pannel side
-Relief='sunken'
+Relief='ridge'
 Bd=70
