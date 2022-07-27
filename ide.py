@@ -4,6 +4,18 @@ from tkinter import Tk as Window
 from tkinter.font import Font
 from idlelib.tooltip import Hovertip
 
+def openfile(filepath):
+    from platform import system
+    if system()=='Darwin':
+        from subprocess import call
+        call(('open',filepath))
+    elif system()=='Windows':
+        from os import startfile
+        startfile(filepath)
+    else:
+        from subprocess import call
+        call(('xdg-open',filepath))
+
 w=Window()
 w.title('LOV IDE <3')
 w.wm_attributes('-fullscreen','True')
@@ -33,17 +45,28 @@ def save(e=None):pass
 def run(e=None):pass
 
 def settings(e=None):
-    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt
+    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt,link
     s=Window()
-    width=350
-    height=480
-    s.geometry(f'{width}x{height}+{int((x/2)-(width/2))}+{int((y/2)-(height/2))}')
+    width,height=480,480
+    print(width,height,sep='x')
+    s.geometry(f'+{int((x/2)-(width/2))}+{int((y/2)-(height/2))}')
     s.overrideredirect(True)
     s.attributes('-topmost',True)
     s.config(bg=fgC)
     border=1
     f1=Frame(s,bg=bgC,width=width-2*border,height=height-2*border)
     f1.place(x=border,y=border)
+    lastClickX=0
+    lastClickY=0
+    def SaveLastClickPos(event):
+        global lastClickX, lastClickY
+        lastClickX=event.x
+        lastClickY=event.y
+    def Dragging(event):
+        xx,yy=event.x-lastClickX+s.winfo_x(),event.y-lastClickY+s.winfo_y()
+        s.geometry("+%s+%s" % (xx,yy))
+    s.bind('<Button-1>',SaveLastClickPos)
+    s.bind('<B1-Motion>',Dragging)
     c=LabelFrame(s,text="Customisation",fg=fgC,bg=bgC)
     c.grid(column=0,row=0,columnspan=3,padx=30,pady=30,ipadx=10,ipady=10)
     f2=Label(c,text="Font family: ",bg=bgC,fg=fgC)
@@ -66,24 +89,27 @@ def settings(e=None):
     fgc=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     fgc.grid(column=1,row=3)
     t(fgc,fgC)
+    link=Label(c,text="[Tkinter colors...]",bg=bgC,fg=fgC,cursor="hand2")
+    link.grid(column=0,columnspan=2,row=4)
+    link.bind("<Button-1>",lambda e:openfile("colors.png"))
     f6=Label(c,text="Panel side: ",bg=bgC,fg=fgC)
-    f6.grid(column=0,row=4,sticky='E')
+    f6.grid(column=0,row=5,sticky='E')
     pside=StringVar(c)
     pside.set(Pside)
     o=OptionMenu(c,pside,'left','right')
-    o.grid(column=1,row=4)
+    o.grid(column=1,row=5)
     o.config(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,highlightthickness=0,width=15)
     f7=Label(c,text="Text box relief: ",bg=bgC,fg=fgC)
-    f7.grid(column=0,row=5,sticky='E')
+    f7.grid(column=0,row=6,sticky='E')
     relief=StringVar(c)
     relief.set(Relief)
     q=OptionMenu(c,relief,'flat','raised','sunken','groove','ridge')
-    q.grid(column=1,row=5)
+    q.grid(column=1,row=6)
     q.config(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,highlightthickness=0,width=15)
     f8=Label(c,text="Text box border size: ",bg=bgC,fg=fgC)
-    f8.grid(column=0,row=6,sticky='E')
+    f8.grid(column=0,row=7,sticky='E')
     bd=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
-    bd.grid(column=1,row=6)
+    bd.grid(column=1,row=7)
     t(bd,Bd)
     butt=[
         Button(s,text="Apply",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=Apply),
@@ -94,10 +120,10 @@ def settings(e=None):
     s.mainloop()
 
 def Apply():
-    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt,chars,family,size,bgC,fgC,Pside,Relief,Bd,tF
+    global x,y,s,ffamily,fsize,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt,chars,family,size,bgC,fgC,Pside,Relief,Bd,tF,link
     frames=[f1,side,status]
     labelframes=[c]
-    labels=[f2,f3,f4,f5,f6,f7,f8,clock]
+    labels=[f2,f3,f4,f5,f6,f7,f8,clock,link]
     entries=[ffamily,fsize,bgc,fgc,bd]
     buttons=[*butt,*[btns[i] for i in btns]]
     optionmenus=[o,q]
@@ -166,7 +192,7 @@ for i,v in enumerate(chars):
     Hovertip(btns[v],v,hover_delay=500)
 time1=''
 clock=Label(w,bg=bgC,fg=fgC)
-clock.place(x=x-70,y=y-23)
+clock.place(x=x-75,y=y-23)
 al=-1
 def tick():
     """Controls the clock (bottom right on status bar)."""
