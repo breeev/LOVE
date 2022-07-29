@@ -6,3 +6,6 @@ fgC='misty rose'
 Pside='right'# side-pannel side
 Relief='raised'
 Bd=70
+# Source and export folders
+Source="C:/Users/breva/Documents/synced/lov/userdata"# where to find text files
+Export="C:/Users/breva/Documents/synced/lov/export"# where to put midi files

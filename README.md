@@ -9,7 +9,7 @@ LOV. This is a lighter Blip interpreter designed to send midi messages to a file
 - Finish the status bar:
   - [ ] cursor;
   - [ ] lengh;
-  - [ ] channels lenghs in beats;
+  - [ ] channels lenghs in beats (from interpreter);
   - [x] alive time;
   - [x] current time.
 - [ ] Clean Settings window widgets' definitions
