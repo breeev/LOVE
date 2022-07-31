@@ -7,11 +7,12 @@ LOV. This is a lighter Blip interpreter designed to send midi messages to a file
 ## TO-DO
 - [ ] Link the IDE to the interpreter.
 - Finish the status bar:
-  - [ ] cursor;
-  - [ ] lengh;
+  - [x] cursor;
+  - [x] lengh;
   - [ ] channels lenghs in beats (from interpreter);
   - [x] alive time;
-  - [x] current time.
+  - [x] current time;
+  - [ ] perfect packing.
 - [ ] Clean Settings window widgets' definitions
 - Finish side buttons actions:
   - [x] close;
