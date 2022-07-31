@@ -23,6 +23,6 @@ LOV. This is a lighter Blip interpreter designed to send midi messages to a file
   - [x] settings.
 - Finish the Settings window:
   - [x] customisation settings;
-  - [ ] folder settings;
+  - [x] folder settings;
   - [ ] interpreter settings? (output, think about easy command detection insertion in code)
-  - [ ] clean up bottom part.
+  - [x] clean up bottom part.
