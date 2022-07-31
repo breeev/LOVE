@@ -72,12 +72,12 @@ def fontshowcase(e=None):
     root.mainloop()
 def settings(e=None):
     global x,y,s,family,size,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt,link,src,exp,fonting,f,f9,f10
-    s=Window()
+    if s:s.focus_force()
+    else:s=Window()
     s.bind('<Control-q>',ex)
     width,height=480,480
     s.geometry(f'+{int((x/2)-(width/2))}+{int((y/2)-(height/2))}')
     s.overrideredirect(True)
-    s.attributes('-topmost',True)
     s.config(bg=fgC)
     border=1
     f1=Frame(s,bg=bgC,width=width-2*border,height=height-2*border)
@@ -127,6 +127,7 @@ def settings(e=None):
     o['menu'].config(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC)
     o.grid(column=1,row=6)
     o.config(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,highlightthickness=0,width=15)
+    Hovertip(o,'Side of the side pannel\n(where the main buttons are)')
     f7=Label(c,text="Text box relief: ",bg=bgC,fg=fgC)
     f7.grid(column=0,row=7,sticky='E')
     relief=StringVar(c)
@@ -135,6 +136,7 @@ def settings(e=None):
     q['menu'].config(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC)
     q.grid(column=1,row=7)
     q.config(bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,highlightthickness=0,width=15)
+    Hovertip(q,'Style of the text box border')
     f8=Label(c,text="Text box border size: ",bg=bgC,fg=fgC)
     f8.grid(column=0,row=8,sticky='E')
     bd=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
@@ -147,11 +149,13 @@ def settings(e=None):
     src=Entry(f,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     src.grid(column=1,row=0)
     t(src,Src)
+    Hovertip(src,'Where you store your text files\n(where to look when opening a file)',500)
     f10=Label(f,text="Export folder: ",bg=bgC,fg=fgC)
     f10.grid(column=0,row=1,sticky='E')
     exp=Entry(f,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     exp.grid(column=1,row=1)
     t(exp,Exp)
+    Hovertip(exp,'Where to store exported text files (midi files)')
     butt=[Button(s,text="Apply",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=Apply),Button(s,text="Save",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=Save),Button(s,text="Close",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=lambda:s.destroy())]
     sticks=['e','n','w']
     for i in range(0,3):butt[i].grid(column=i,row=2,sticky=sticks[i])

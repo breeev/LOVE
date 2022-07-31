@@ -6,6 +6,7 @@ LOV. This is a lighter Blip interpreter designed to send midi messages to a file
 
 ## TO-DO
 - [ ] Link the IDE to the interpreter.
+- [ ] Hovertips
 - Finish the status bar:
   - [x] cursor;
   - [x] lengh;
