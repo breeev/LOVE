@@ -5,23 +5,24 @@ My advanced MML inspired golfing language (in progress): Lengh, Octave, Velocity
 LOV. This is a lighter Blip interpreter designed to send midi messages to a file or a local (virtual) loopback MIDI device like <a href="https://www.tobias-erichsen.de/software/loopmidi.html">LoopMIDI</a>. These messages can then be used by a sound system built in Python, Pure-Data or just any MIDI player or editor to play, shape sounds and instruments, or edit songs.
 
 ## TO-DO
-- [ ] Link the IDE to the interpreter.
-- [ ] Hovertips
+- [x] Link the IDE to the interpreter.
+- [x] Hovertips
 - Finish the status bar:
   - [x] cursor;
   - [x] lengh;
-  - [ ] channels lenghs in beats (from interpreter);
+  - [x] channels lenghs in beats (from interpreter);
   - [x] alive time;
   - [x] current time;
-  - [ ] perfect packing.
-- [ ] Clean Settings window widgets' definitions
+  - [x] perfect packing.
+- [x] Clean Settings window widgets' definitions
 - Finish side buttons actions:
   - [x] close;
   - [x] restart;
   - [ ] open;
   - [ ] new;
   - [ ] save;
-  - [ ] run;
+  - [x] run;
+  - [ ] export;
   - [x] settings.
 - Finish the Settings window:
   - [x] customisation settings;

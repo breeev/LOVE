@@ -1,11 +1,13 @@
 from mido import Message,MidiFile,MidiTrack,MetaMessage,bpm2tempo,tick2second
-def interpreter(string:str)->MidiFile:
+def interpreter(string:str,play=False,export=False)->dict:
+    # string=string.replace('\n','').replace(' ','')
+    dic={}
     def incr():
-        global i,char
+        nonlocal i,char
         i+=1
         char=string[i]
     mid=MidiFile()
-    string="My First Song\nt240Tinky Winky... La-la@1l8o4((3c+))l4de,d,+c-e+d-dl6cv1dvFcc,,@2l2o3c.<g."
+    # string="My First Song\nt240Tinky Winky... La-la@1l8o4((3c+))l4de,d,+c-e+d-dl6cv1dvFcc,,@2l2o3c.<g."
     notes="cCdDefFgGaAb"
     i=0
     ddump=""
@@ -13,7 +15,8 @@ def interpreter(string:str)->MidiFile:
         char=string[i]
         if char=="@":
             if ddump:
-                print('{:>11}{:>5}'.format('BPM: ',ddump))
+                # print('{:>11}{:>5}'.format('BPM: ',ddump))
+                dic['BPM']=ddump
                 t=bpm2tempo(int(ddump))
                 mid.tracks.append(MidiTrack([MetaMessage('midi_port',port=0),MetaMessage('set_tempo',tempo=t)]))
                 ddump=""
@@ -73,7 +76,8 @@ def interpreter(string:str)->MidiFile:
                     i-=1
                     string=string[:ids]+(int(r) if r else 2)*string[ida:i]+string[i+1:]
                     i=ids-1
-            print('Channel {}: {:>5} beats'.format(ch,(tick2second(sum(m.time for m in track),480,t)*1000000)/t))
+            # print('Channel {}: {:>5} beats'.format(ch,(tick2second(sum(m.time for m in track),480,t)*1000000)/t))
+            dic[ch]=(tick2second(sum(m.time for m in track),480,t)*1000000)/t
             i-=1
         elif char=='t':
             incr()
@@ -82,10 +86,10 @@ def interpreter(string:str)->MidiFile:
                 incr()
             i-=1
         i+=1
-    return mid
-
-name=string.splitlines()[0]+'.mid'
-mid.save(name)
-
-from os import system
-system(r'D:\MidiSheetMusic-2.6.2.exe C:\Users\breva\LOV\\"'+name+'"')
+    if export or play:
+        name=string.splitlines()[0]+'.mid'
+        mid.save(name)
+        if play:
+            from os import system
+            system(r'D:\MidiSheetMusic-2.6.2.exe C:\Users\breva\LOV\\"'+name+'"')
+    else:return dic
