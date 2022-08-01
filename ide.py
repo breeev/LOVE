@@ -2,6 +2,7 @@ from time import strftime
 from tkinter.font import Font,families
 from idlelib.tooltip import Hovertip
 from tkinter import INSERT,Tk as Window,Button,Entry,Frame,Label,LabelFrame,OptionMenu,StringVar,Text,Scrollbar,Canvas
+from os.path import realpath
 
 from lov import interpreter
 
@@ -11,9 +12,9 @@ w=Window()
 w.title('LOV IDE <3')
 w.wm_attributes('-fullscreen','True')
 x,y=w.winfo_screenwidth(),w.winfo_screenheight()
-s=None
 
 with open('preferences') as f:exec(f.read())
+if not 'src' in locals():src=realpath(__file__)
 
 def t(w:Entry,t:str):
     """Modify the text of a Tkinter Entry object."""
@@ -23,8 +24,7 @@ def t(w:Entry,t:str):
 def ex(e=None):
     global id
     for win in ['s','g','root']:
-        try:exec(f'global {win};{win}.destroy()')
-        except:pass
+        if win in globals():exec(f'if str({win})!=".":print({win});{win}.destroy();del {win}')
     w.destroy()
 def restart(e=None):
     ex()
@@ -35,6 +35,7 @@ def new(e=None):print(e)
 def load(e=None):pass
 def save(e=None):pass
 def run(e=None):interpreter(text.get('1.0','end-1c'),True)
+def export(e=None):interpreter(text.get('1.0','end-1c'),False,True)
 
 def colorshowcase(e=None):
     global inventory,g
@@ -74,8 +75,8 @@ def fontshowcase(e=None):
     root.mainloop()
 def settings(e=None):
     global x,y,s,family,size,bgc,fgc,pside,relief,bd,f1,f2,f3,f4,f5,f6,f7,f8,c,o,q,butt,link,src,exp,fonting,f,f9,f10
-    if s:s.focus_force()
-    else:s=Window()
+    try:s.focus_force()
+    except:s=Window()
     s.bind('<Control-q>',ex)
     width,height=480,480
     s.geometry(f'+{int((x/2)-(width/2))}+{int((y/2)-(height/2))}')
@@ -248,7 +249,7 @@ def chsizeloop():
     try:
         if lastString!=newString:
             dic=interpreter(newString)
-            vchsizes.set((8*' ').join([f'{i}: {dic[i]}' for i in dic]))
+            vchsizes.set((8*' ').join([f'@{i}-{dic[i]}' for i in dic]))
     except Exception as e:print(f'Background interpreter failed: {e}')
     finally:
         lastString=newString
@@ -270,5 +271,6 @@ def tick():
         vclock.set(time2+" | {:0>2}:{:0>2}".format(al//60,al%60))# if time string has changed,update it
     clock.after(1000,tick)# calls itself every second to update the time display as needed
 tick()
+w.focus_force()
 text.focus_force()
 w.mainloop()

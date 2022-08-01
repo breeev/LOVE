@@ -26,6 +26,7 @@ def interpreter(string:str,play=False,export=False)->dict:
             track.append(MetaMessage('midi_port',port=int(char,16)))
             ch=char
             l,o,v=4,4,64# LOV <3
+            t=60
             s=0
             while char!="@" and i<len(string)-1:
                 incr()
@@ -46,7 +47,7 @@ def interpreter(string:str,play=False,export=False)->dict:
                     o=int(string[i])
                 elif char=='v':
                     i+=1
-                    v=int((int(string[i],16)/15)*127)
+                    v=int(2*string[i],16)
                 elif char=="'":
                     d=''
                     incr()
@@ -77,7 +78,7 @@ def interpreter(string:str,play=False,export=False)->dict:
                     string=string[:ids]+(int(r) if r else 2)*string[ida:i]+string[i+1:]
                     i=ids-1
             # print('Channel {}: {:>5} beats'.format(ch,(tick2second(sum(m.time for m in track),480,t)*1000000)/t))
-            dic[ch]=(tick2second(sum(m.time for m in track),480,t)*1000000)/t
+            dic[ch]=round((tick2second(sum(m.time for m in track),480,t)*1000000)/t,3)
             i-=1
         elif char=='t':
             incr()
