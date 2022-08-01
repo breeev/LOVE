@@ -107,8 +107,8 @@ def settings(e=None):
     size=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     size.grid(column=1,row=1)
     t(size,Size)
-    fonting=Button(c,text="Tkinter fonts",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=fontshowcase)
-    fonting.grid(column=0,row=2,columnspan=2)
+    fonting=Button(c,text="Tkinter fonts",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=fontshowcase,width=15)
+    fonting.grid(column=1,row=2)
     f4=Label(c,text="Background color: ",bg=bgC,fg=fgC)
     f4.grid(column=0,row=3,sticky='E')
     bgc=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
@@ -119,8 +119,8 @@ def settings(e=None):
     fgc=Entry(c,bg=bgC,fg=fgC,insertbackground=fgC,selectbackground=fgC,selectforeground=bgC)
     fgc.grid(column=1,row=4)
     t(fgc,fgC)
-    link=Button(c,text="Tkinter colors",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=colorshowcase)
-    link.grid(column=0,columnspan=2,row=5)
+    link=Button(c,text="Tkinter colors",bg=bgC,fg=fgC,activebackground=fgC,activeforeground=bgC,command=colorshowcase,width=15)
+    link.grid(column=1,row=5)
     f6=Label(c,text="Panel side: ",bg=bgC,fg=fgC)
     f6.grid(column=0,row=6,sticky='E')
     pside=StringVar(c)
@@ -194,7 +194,7 @@ Family='{family.get()}'
 Size={size.get()}
 bgC='{bgc.get()}'
 fgC='{fgc.get()}'
-Side='{side.get()}'# side-pannel side
+Side='{pside.get()}'# side-pannel side
 Relief='{relief.get()}'
 Bd={bd.get()}
 # Source and destination folders

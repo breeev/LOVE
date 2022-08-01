@@ -1,11 +1,11 @@
 # text box font
-Family='Terminal'
+Family='Drafting* Mono'
 Size=30
 bgC='slate grey'
 fgC='misty rose'
-Side='right'# side-pannel side
-Relief='raised'
+Side='left'# side-pannel side
+Relief='sunken'
 Bd=70
-# Source and export folders
-Src="C:/Users/breva/Documents/synced/lov/userdata"# where to find text files
-Exp="C:/Users/breva/Documents/synced/lov/export"# where to put midi files
+# Source and destination folders
+Src='C:/Users/breva/Documents/synced/lov/userdata'# where to find text files
+Exp='C:/Users/breva/Documents/synced/lov/export'# where to put midi files
