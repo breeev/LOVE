@@ -7,5 +7,6 @@ Side='left'# side-pannel side
 Relief='sunken'
 Bd=70
 # Source and destination folders
-Src='C:/Users/breva/Documents/synced/lov/userdata'# where to find text files
-Exp='C:/Users/breva/Documents/synced/lov/export'# where to put midi files
+Src=r'C:/Users/breva/Documents/synced/lov/userdata'# where to find text files
+Exp=r'C:/Users/breva/Documents/synced/lov/export'# where to put midi files
+Exe=r'D:\MidiSheetMusic-2.6.2.exe'

@@ -1,5 +1,7 @@
+from genericpath import exists
+from os import mkdir
 from mido import Message,MidiFile,MidiTrack,MetaMessage,bpm2tempo,tick2second
-def interpreter(string:str,play=False,export=False)->dict:
+def interpreter(string:str,exe='',export='')->dict:
     # string=string.replace('\n','').replace(' ','')
     dic={}
     def incr():
@@ -87,10 +89,12 @@ def interpreter(string:str,play=False,export=False)->dict:
                 incr()
             i-=1
         i+=1
-    if export or play:
-        name=string.splitlines()[0]+'.mid'
-        mid.save(name)
-        if play:
-            from os import system
-            system(r'D:\MidiSheetMusic-2.6.2.exe C:\Users\breva\LOV\\"'+name+'"')
+    if exe or export:name=string.splitlines()[0]+'.mid'
+    if exe:
+        cachedir='.cache/'
+        if not exists(cachedir):mkdir(cachedir)
+        mid.save(cachedir+name)
+        from os import system
+        system(f'start "{exe}" {cachedir}"{name}"')
+    elif export:mid.save(export+name)
     else:return dic
