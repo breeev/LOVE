@@ -1,5 +1,5 @@
 from genericpath import exists
-from os import mkdir
+from os import mkdir, rmdir
 from mido import Message,MidiFile,MidiTrack,MetaMessage,bpm2tempo,tick2second
 def interpreter(string:str,exe='',export='')->dict:
     # string=string.replace('\n','').replace(' ','')
@@ -92,9 +92,11 @@ def interpreter(string:str,exe='',export='')->dict:
     if exe or export:name=string.splitlines()[0]+'.mid'
     if exe:
         cachedir='.cache/'
-        if not exists(cachedir):mkdir(cachedir)
+        mkdir(cachedir)
         mid.save(cachedir+name)
         from os import system
+        print(f'start "{exe}" {cachedir}"{name}"')
         system(f'start "{exe}" {cachedir}"{name}"')
+        rmdir(cachedir)
     elif export:mid.save(export+name)
     else:return dic

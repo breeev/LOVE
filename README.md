@@ -20,7 +20,7 @@ LOV. This is a lighter Blip interpreter designed to send midi messages to a file
   - [x] restart;
   - [ ] open;
   - [ ] new;
-  - [ ] save;
+  - [x] save /!\REWRITE/!\;
   - [x] run;
   - [ ] export;
   - [x] settings.

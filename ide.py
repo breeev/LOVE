@@ -1,6 +1,8 @@
 from genericpath import exists
-from re import search
+from pathlib import Path
+from re import M, search
 from select import select
+from sre_parse import ASCIILETTERS
 from time import strftime
 from tkinter.font import Font,families
 from tkinter.messagebox import askokcancel, showerror, showwarning
@@ -56,9 +58,12 @@ def save(e=None):
         data=text.get('1.0','end-1c')
         result=search(r't[0-9]+',data)
         a,b=(None,None) if not result else result.span()
-        path=data.splitlines()[0]+'.midi'if a and '\n'in data[:b]else askopenfilename(initialdir=Src)
-        if not path or (exists(path) and not askokcancel('Overwrite?','File already exists. Overwrite?')):return
-        with open(path,'w') as f:f.write(data)
+        path=data.splitlines()[0]+'.txt'if a and '\n'in data[:b]else askopenfilename(initialdir=Src)
+        if not path:return
+        p=Path(Src).joinpath(path)
+        if p.exists and not askokcancel('Overwrite?','File already exists. Overwrite?'):return
+        p.touch(exist_ok=1)
+        p.write_text(data)
         saved=True
 def play(e=None):
     try:interpreter(text.get('1.0','end-1c'),Exe)
@@ -285,6 +290,7 @@ chsizes=Label(status,textvariable=vchsizes,bg=bgC,fg=fgC)
 chsizes.grid(row=0,column=1,padx=20)
 def update(e=None):
     global saved
+    if not e.char in ASCIILETTERS:return
     u=len(text.get('1.0','end-1c').splitlines())
     vcursor.set(f"{text.index(INSERT)} / {u if u else 1}.{len(text.get('1.0','end-1c'))}")
     if u and saved:saved=False
@@ -301,7 +307,7 @@ def chsizeloop():
         lastString=newString
         chsizes.after(1000,chsizeloop)
 chsizes.after(1000,chsizeloop)
-text.bind('<KeyPress>',lambda e:cursor.after(1,update))
+text.bind('<KeyPress>',lambda e:cursor.after(1,lambda:update(e)))
 time1=''
 vclock=StringVar(w)
 clock=Label(w,textvariable=vclock,bg=bgC,fg=fgC)
