@@ -86,8 +86,8 @@ def save(e=None):
         path=data.splitlines()[0]+'.txt'if a and '\n'in data[:b]else askopenfilename(initialdir=Src)
         if not path:return report('canceled saving')
         p=Path(Src).joinpath(path)
-        if p.exists and not askokcancel('Overwrite?','File already exists. Overwrite?'):return
-        with timer('saving document at '+p.absolute()):
+        if p.exists() and not askokcancel('Overwrite?','File already exists. Overwrite?'):return
+        with timer('saving document at '+str(p.absolute())):
             p.touch(exist_ok=1)
             p.write_text(data)
             saved=True
@@ -279,8 +279,8 @@ with timer('building main window'):
         'load':'\u2727',
         'save':'\u2726',
         'play':'\u2764',
-        'export':'a',
-        'settings':'\u2763'
+        'export':'\u2763',
+        'settings':'\u2766'
     }
     fcts=[ex,restart,new,load,save,play,export,settings]
     btns={}

@@ -66,9 +66,7 @@ def interpreter(string:str,exe='',export='')->dict:
                     ids=i
                     r=''
                     incr()
-                    while char.isdigit():
-                        r+=char
-                        incr()
+                    while char.isdigit():r+=char;incr()
                     ida=i
                     level=1
                     while level:
@@ -78,14 +76,11 @@ def interpreter(string:str,exe='',export='')->dict:
                     i-=1
                     string=string[:ids]+(int(r) if r else 2)*string[ida:i]+string[i+1:]
                     i=ids-1
-            # print('Channel {}: {:>5} beats'.format(ch,(tick2second(sum(m.time for m in track),480,t)*1000000)/t))
             dic[ch]=round((tick2second(sum(m.time for m in track),480,t)*1000000)/t,3)
             i-=1
         elif char=='t':
             incr()
-            while char.isdigit():
-                ddump+=char
-                incr()
+            while char.isdigit():ddump+=char;incr()
             i-=1
         i+=1
     if exe or export:name=string.splitlines()[0]+'.mid'
