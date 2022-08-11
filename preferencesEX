@@ -1,0 +1,12 @@
+# text box font
+Family='Drafting* Mono'
+Size=30
+bgC='slate grey'
+fgC='misty rose'
+Side='left'# side-pannel side
+Relief='sunken'
+Bd=70
+# Source and destination folders
+Src=r'C:/Users/breva/Documents/synced/lov/userdata'# where to find text files
+Exp=r'C:/Users/breva/Documents/synced/lov/export'# where to put midi files
+Exe=r'D:\MidiSheetMusic-2.6.2.exe'
