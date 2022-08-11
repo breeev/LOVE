@@ -1,4 +1,4 @@
-# L.O.V.
+# ![logo](lov.png "L.O.V.") L.O.V.
 My advanced MML inspired golfing language (in progress): Lengh, Octave, Velocity / Volume. I do need a better name.
 
 ## What?
