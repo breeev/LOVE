@@ -34,6 +34,9 @@ Don't hesitate to edit these to your tastes.
 ## Where does icons come from??
 These funny little icons are actually UNICODE! They're called Dingbats and are pretty cute. I put in the repo `U2700.pdf` right from <a href="http://www.unicode.org/charts/">unicode.org</a> with all these dingbats and their corresponding unicode code things. I really hope they come right on your screen, if not you can always modify their custom font `sF` in `ide.py` after the bindings. The codes are written before the bindings, in Python unicode chars are written `\u****` so you can replace the icons as well.
 
+## Logging
+I put a smart home-made logging system in the ide wich displays and times everything in the console. The release is window-based and no log will be available, you need the Python script to have it. Just launch `ide.py`.
+
 ## Call me babee!
 I think that's it. If you have something to say, email me at my funny alias `breee@duck.com`. Feel free to ask for help, report bugs or just say hello!
 I built this thing for me but mostly for you. And you can improve it by finding bugs and bringing them to me. Note that a lot of warnings and errors or just weird mechanics you can stumble upon aren't always bugs, I actually mistook several times simple mistakes for fat bugs.
