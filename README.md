@@ -18,7 +18,7 @@ LOV. This is a lighter Blip interpreter designed to send midi messages to a file
 - Finish side buttons actions:
   - [x] close;
   - [x] restart;
-  - [ ] open;
+  - [x] open;
   - [x] new;
   - [x] save /!\REWRITE/!\;
   - [x] run;
