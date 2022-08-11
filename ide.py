@@ -96,7 +96,6 @@ def play(e=None):
         with timer('playing with '+Exe):interpreter(text.get('1.0','end-1c'),Exe)
     except Exception as e:showerror('Error',str(e).title());report(e)
 def export(e=None):
-    report('exporting')
     try:
         with timer('exporting file at '+Exp):interpreter(text.get('1.0','end-1c'),export=Exp)
     except Exception as e:showerror('Error',str(e).title());report(e)
