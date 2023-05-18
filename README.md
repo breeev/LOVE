@@ -1,5 +1,5 @@
 # ![logo](lov.png "L.O.V.") L.O.V.
-My advanced MML inspired golfing language (in progress): Lengh, Octave, Velocity / Volume. I do need a better name.
+My first MML inspired golfing language: Lengh, Octave, Velocity / Volume. I do need a better name.
 
 ## What?
 LOV. This is a lighter Blip interpreter designed to send midi messages to a file and eventually play it on a sound system built in Python sending it to a local (virtual) loopback MIDI device like <a href="https://www.tobias-erichsen.de/software/loopmidi.html">LoopMIDI</a> for exemple, or just to open it with a midi player / editor.
